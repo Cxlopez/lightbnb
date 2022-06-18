@@ -99,7 +99,7 @@ const getAllReservations = function(guest_id, limit = 10) {
   `,
   [guest_id, limit])
     .then((result) => {
-      return result.rows[0];
+      return result.rows;
     })
     .catch((err) => {
       console.log(err.message);
@@ -146,7 +146,7 @@ const getAllProperties = function(options, limit = 10) {
   queryString += ' GROUP BY properties.id';
   if (options.minimum_rating) {
     queryParams.push(options.minimum_rating);
-    queryString += ` HAVING AVG(property_reviews.rating) >= $${queryParams.length}`;
+    queryString += ` HAVING avg(property_reviews.rating) >= $${queryParams.length}`;
   }
 
   // 4
